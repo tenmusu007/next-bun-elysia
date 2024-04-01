@@ -3,6 +3,7 @@ import { Elysia } from 'elysia';
 import UserRoutes from './user';
 import ChatRoute from './chat';
 import { websocket } from '@elysiajs/websocket';
+import swagger from '@elysiajs/swagger';
 
 // const app = new Elysia({ prefix: '/api' })
 //   .get('/elysia', () => 'hi')
@@ -38,6 +39,16 @@ const corsConfig = {
 const app = new Elysia({ prefix: '/api' })
   .use(UserRoutes)
   .use(ChatRoute)
+  .use(
+    swagger({
+      documentation: {
+        info: {
+          title: 'Elysia Documentation',
+          version: '1.0.0',
+        },
+      },
+    })
+  )
   // .use(websocket())
   .use(cors(corsConfig));
 export const GET = app.handle;
